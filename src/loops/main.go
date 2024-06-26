@@ -13,7 +13,7 @@ func Factorial(n int) int {
 	// Go doesn't have a while keyword, and it uses "for" instead
 	for i <= n {
 		p *= i
-		// i++
+		i++
 	}
 
 	return p

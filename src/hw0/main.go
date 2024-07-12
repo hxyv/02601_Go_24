@@ -53,8 +53,94 @@ func SumProperDivisors(n int) int {
 	return sum
 }
 
-func FibonacciArray(n int) int {
+func FibonacciArray(n int) []int {
 	fibonacciList := make([]int, 0)
+
+	if n == 0 {
+		fibonacciList = append(fibonacciList, 1)
+		return fibonacciList
+	}
+
+	for i := 0; i <= n; i++ {
+		if i == 0 {
+			fibonacciList = append(fibonacciList, 1)
+		} else if i == 1 {
+			fibonacciList = append(fibonacciList, 1)
+		} else {
+			sum := fibonacciList[i-2] + fibonacciList[i-1]
+			fibonacciList = append(fibonacciList, sum)
+		}
+	}
+
+	return fibonacciList
+}
+
+func DividesAll(a []int, d int) bool {
+	if d == 0 {
+		return false
+	}
+
+	for _, value := range a {
+		if value % d != 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func MaxIntegerArray(list []int) int {
+	max := list[0]
+
+	for _, value := range list {
+		if value > max {
+			max = value
+		}
+	}
+
+	return max
+}
+
+func MaxIntegers(numbers ...int) int {
+	return MaxIntegerArray(numbers)
+}
+
+func MinIntegerArray(list []int) int {
+	min := list[0]
+
+	for _, value := range list {
+		if value < min {
+			min = value
+		}
+	}
+
+	return min
+}
+
+func MinIntegers(numbers ...int) int {
+	return MinIntegerArray(numbers)
+}
+
+func SumIntegers(numbers ...int) int {
+	sum := 0
+	for _, value := range numbers {
+		sum += value
+	}
+
+	return sum
+}
+
+func GCDArray(a []int) int {
+	divisor := 1
+	min := MinIntegerArray(a)
+
+	for p := 1; p <= min; p++ {
+		if DividesAll(a, p) == true {
+			divisor = p
+		}
+	}
+
+	return divisor
 }
 
 func main() {
@@ -86,5 +172,39 @@ func main() {
 	fmt.Println(SumProperDivisors(1))
 
 	// Chapter 2.3
+	fmt.Println(FibonacciArray(0))
+	fmt.Println(FibonacciArray(1))
+	fmt.Println(FibonacciArray(2))
+	fmt.Println(FibonacciArray(3))
+	fmt.Println(FibonacciArray(30))
 
+	fmt.Println(DividesAll([]int{2, 4, 6, 8, 10}, 2))
+	fmt.Println(DividesAll([]int{1, 3, 5, 7}, 14))
+	fmt.Println(DividesAll([]int{104, 8, 19, 203}, 1))
+	fmt.Println(DividesAll([]int{-16, -24, -400, -60}, 4))
+	fmt.Println(DividesAll([]int{9, 15, 12}, -3))
+	fmt.Println(DividesAll([]int{7, 14, 21}, 0))
+	fmt.Println(DividesAll([]int{3, 6, 24, 12}, 2))
+	fmt.Println(DividesAll([]int{4, 48, 12, 6}, 12))
+
+	fmt.Println(MaxIntegerArray([]int{-47}))
+	fmt.Println(MaxIntegerArray([]int{1,2,3,4,5,6,7}))
+	fmt.Println(MaxIntegerArray([]int{7,6,5,4,3,2,1}))
+	fmt.Println(MaxIntegerArray([]int{-100,-100,-1,-100,-100}))
+
+	fmt.Println(MaxIntegers(-47))
+	fmt.Println(MaxIntegers(1,2,3,4,5,6,7))
+	fmt.Println(MaxIntegers(7,6,5,4,3,2,1))
+	fmt.Println(MaxIntegers(-100,-100,-1,-100,-100))
+
+	fmt.Println(SumIntegers(42))
+	fmt.Println(SumIntegers(0, 1, -1))
+	fmt.Println(SumIntegers(1, 2, 3, 4, 5, 6))
+	fmt.Println(SumIntegers(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1))
+
+	fmt.Println(GCDArray([]int{7}))
+	fmt.Println(GCDArray([]int{2,2,2,2,2}))
+	fmt.Println(GCDArray([]int{100,200,1,300,400}))
+	fmt.Println(GCDArray([]int{12,15,9,6,24}))
+	fmt.Println(GCDArray([]int{6,9,16}))
 }

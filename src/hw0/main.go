@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func Permutation(n, k int) int {
@@ -143,6 +144,66 @@ func GCDArray(a []int) int {
 	return divisor
 }
 
+func IsPerfect(n int) bool {
+	if n == SumProperDivisors(n) {
+		return true
+	}
+
+	return false
+}
+
+func NextPerfectNumber(n int) int {
+	if n == 0 {
+		return 6
+	}
+
+	i := n + 1
+
+	for IsPerfect(i) == false {
+		i++
+	}
+
+	return i
+}
+
+func IsPrime(p int) bool {
+    for k := 2; float64(k) <= math.Sqrt(float64(p)); k++ {
+        if p%k == 0 {
+            return false
+        }
+    }
+    return true
+}
+
+func ListMersennePrimes(n int) []int {
+	MersennerList := make([]int, 0)
+
+	for i := 2; i <= n; i++ {
+		num := Power(2, i) - 1
+		if IsPrime(num) {
+			MersennerList = append(MersennerList, num)
+		}
+	}
+	
+	return MersennerList
+}
+
+func NextTwinPrimes(n int) (int, int) {
+	var i int
+
+	if n == 0 {
+		i = 3
+	} else {
+		i = n + 1
+	}
+
+	for !IsPrime(i) || !IsPrime(i + 2) {
+		i++
+	}
+
+	return i, i + 2
+}
+
 func main() {
 	// Chapter 2.1
 	fmt.Println(Permutation(12, 1))
@@ -207,4 +268,36 @@ func main() {
 	fmt.Println(GCDArray([]int{100,200,1,300,400}))
 	fmt.Println(GCDArray([]int{12,15,9,6,24}))
 	fmt.Println(GCDArray([]int{6,9,16}))
+
+	// Chapter 2.4
+	fmt.Println(IsPerfect(1))
+	fmt.Println(IsPerfect(2))
+	fmt.Println(IsPerfect(6))
+	fmt.Println(IsPerfect(10))
+	fmt.Println(IsPerfect(14))
+	fmt.Println(IsPerfect(28))
+	fmt.Println(IsPerfect(300))
+	fmt.Println(IsPerfect(496))
+	fmt.Println(IsPerfect(8000))
+	fmt.Println(IsPerfect(8128))
+
+	fmt.Println(NextPerfectNumber(0))
+	fmt.Println(NextPerfectNumber(5))
+	fmt.Println(NextPerfectNumber(6))
+	fmt.Println(NextPerfectNumber(27))
+	fmt.Println(NextPerfectNumber(28))
+	fmt.Println(NextPerfectNumber(495))
+	fmt.Println(NextPerfectNumber(496))
+
+	fmt.Println(ListMersennePrimes(2))
+	fmt.Println(ListMersennePrimes(6))
+	fmt.Println(ListMersennePrimes(7))
+	fmt.Println(ListMersennePrimes(60))
+	fmt.Println(ListMersennePrimes(61))
+
+	// Chapter 2.5
+	fmt.Println(NextTwinPrimes(0))
+	fmt.Println(NextTwinPrimes(3))
+	fmt.Println(NextTwinPrimes(29))
+	fmt.Println(NextTwinPrimes(616))
 }
